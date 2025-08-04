@@ -1,5 +1,6 @@
 package com.alura.literalura.principal;
 
+import org.springframework.boot.CommandLineRunner;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,8 +13,10 @@ import com.alura.literalura.repository.AutorRepository;
 import com.alura.literalura.repository.LivroRepository;
 import com.alura.literalura.service.ConsumoApi;
 import com.alura.literalura.service.ConverteDados;
+import org.springframework.stereotype.Component;
 
-public class Principal {
+@Component
+public class Principal implements CommandLineRunner {
 
     Scanner leitor = new Scanner(System.in);
     ConsumoApi consumo = new ConsumoApi();
@@ -30,7 +33,12 @@ public class Principal {
       this.autorRepository=autorRepository;
    }
 
-   public void exibeMenu() {
+   @Override
+   public void run(String... args) throws Exception {
+      exibeMenu();
+   }
+
+   private void exibeMenu() {
       var opcao = -1;
 
       while (opcao != 0) {
@@ -156,10 +164,7 @@ public class Principal {
 
       System.out.println("--------AUTORES----------");
       List<Autor>autoresCadastrados=autorRepository.findAll();
-         autoresCadastrados.stream()
-                         .collect(Collectors.toList())
-                                 .forEach(System.out::println);
-
+      autoresCadastrados.forEach(System.out::println);
       System.out.println("--------------------------");
    }
 
